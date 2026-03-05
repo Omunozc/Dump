@@ -469,6 +469,17 @@ namespace STOD_Web
         //Eventos de la sección 01 -----------------------------------------------------------------
         protected void cibc_cs_T2_paisID(object sender, EventArgs e)
         {
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+            // cambios hechos por oscar muñoz
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+            T2_departamentoID.Items.Clear();
+            T2_municipioID.Items.Clear();
+
+            T2_departamentoID.Items.Insert(0, new ListItem("Seleccione...", ""));
+            T2_municipioID.Items.Insert(0, new ListItem("Seleccione...", ""));
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+            // fin cambios
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
             if (T2_paisID.SelectedValue == "GT")
             {
                 T2_departamentoID.Enabled = true;
@@ -514,6 +525,17 @@ namespace STOD_Web
         }
         protected void cibc_cs_T2_departamentoID(object sender, EventArgs e)
         {
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+            // cambios hechos por oscar muñoz
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+            T2_municipioID.Items.Clear();
+
+            T2_municipioID.Items.Insert(0, new ListItem("Seleccione...", ""));
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ 
+            // fin de cambios
+            // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
             try
             {
                 T2_municipioID.Enabled = true;
@@ -524,7 +546,7 @@ namespace STOD_Web
                 FIVEWS.CL_Diccionario Parametros = new FIVEWS.CL_Diccionario();
                 // Agregar Paramtetros al listado de parámetros
                 Parametros.Nombre = "@DepartamentoID";
-                Parametros.Valor = Convert.ToInt32(T2_departamentoID.SelectedIndex);
+                Parametros.Valor = Convert.ToInt32(T2_departamentoID.SelectedValue);
                 ListParamsIn.Add(Parametros);
                 // FIVEWS.CL_Diccionario listaParmas = ListParamsIn;
                 FIVEWS.CL_Resultado resultado = ws.FEICPJ_WS_CAT_11_Municipios(ListParamsIn.ToArray());
@@ -563,6 +585,8 @@ namespace STOD_Web
         }
         protected void cibc_cs_T17_direccionResidencia_Pais(object sender, EventArgs e)
         {
+            T17_direccionResidencia_Municipio.Items.Clear();
+
             if (T17_direccionResidencia_Pais.SelectedValue == "GT")
             {
                 T17_direccionResidencia_Departamento.Enabled = true;
@@ -605,9 +629,13 @@ namespace STOD_Web
                 T17_direccionResidencia_Departamento.Enabled = false;
                 T17_direccionResidencia_Municipio.Enabled = false;
             }
+
+            T17_direccionResidencia_Departamento.Items.Insert(0, new ListItem("Seleccione departamento...", "0"));
+            T17_direccionResidencia_Municipio.Items.Insert(0, new ListItem("Seleccione municipio...", "0"));
         }
         protected void cibc_cs_T17_direccionResidencia_Departamento(object sender, EventArgs e)
         {
+            T17_direccionResidencia_Municipio.Items.Clear();
             try
             {
                 T17_direccionResidencia_Municipio.Enabled = true;
@@ -618,7 +646,7 @@ namespace STOD_Web
                 FIVEWS.CL_Diccionario Parametros = new FIVEWS.CL_Diccionario();
                 // Agregar Paramtetros al listado de parámetros
                 Parametros.Nombre = "@DepartamentoID";
-                Parametros.Valor = Convert.ToInt32(T17_direccionResidencia_Departamento.SelectedIndex);
+                Parametros.Valor = Convert.ToInt32(T17_direccionResidencia_Departamento.SelectedValue);
                 ListParamsIn.Add(Parametros);
                 // FIVEWS.CL_Diccionario listaParmas = ListParamsIn;
                 FIVEWS.CL_Resultado resultado = ws.FEICPJ_WS_CAT_11_Municipios(ListParamsIn.ToArray());
@@ -640,6 +668,7 @@ namespace STOD_Web
             catch (Exception ex)
             {
             }
+            T17_direccionResidencia_Municipio.Items.Insert(0, new ListItem("Seleccione municipio...", "0"));
         }
         protected void cibc_cs_T17_origenRiqueza(object sender, EventArgs e)
         {
@@ -747,6 +776,10 @@ namespace STOD_Web
         //Eventos de la sección 07 -----------------------------------------------------------------
         protected void cibc_cs_T8_direccionnacimiento_Pais(object sender, EventArgs e)
         {
+            T8_direccionnacimiento_Municipio.Items.Clear();
+            T8_direccionnacimiento_Departamento.Items.Clear();
+
+
             if (T8_direccionnacimiento_Pais.SelectedValue == "GT")
             {
                 T8_direccionnacimiento_Departamento.Enabled = true;
@@ -800,9 +833,13 @@ namespace STOD_Web
                 T8_tipoDocumentoIdentificiacion.SelectedValue = "P";
                 T8_emisionPasaporte.Enabled = true;
             }
+            T8_direccionnacimiento_Departamento.Items.Insert(0, new ListItem("Seleccione departamento...", "0"));
+            T8_direccionnacimiento_Municipio.Items.Insert(0, new ListItem("Seleccione municipio...", "0"));
         }
         protected void cibc_cs_T8_direccionnacimiento_Departamento(object sender, EventArgs e)
         {
+            T8_direccionnacimiento_Municipio.Items.Clear();
+
             try
             {
                 T8_direccionnacimiento_Municipio.Enabled = true;
@@ -813,7 +850,7 @@ namespace STOD_Web
                 FIVEWS.CL_Diccionario Parametros = new FIVEWS.CL_Diccionario();
                 // Agregar Paramtetros al listado de parámetros
                 Parametros.Nombre = "@DepartamentoID";
-                Parametros.Valor = Convert.ToInt32(T8_direccionnacimiento_Departamento.SelectedIndex);
+                Parametros.Valor = Convert.ToInt32(T8_direccionnacimiento_Departamento.SelectedValue);
                 ListParamsIn.Add(Parametros);
                 // FIVEWS.CL_Diccionario listaParmas = ListParamsIn;
                 FIVEWS.CL_Resultado resultado = ws.FEICPJ_WS_CAT_11_Municipios(ListParamsIn.ToArray());
@@ -877,14 +914,30 @@ namespace STOD_Web
             }
             else
             {
+                // 1. Deshabilitamos los controles
                 T8_direccionResidencia_Departamento.Enabled = false;
-                T8_direccionResidencia_Departamento.SelectedValue = "0";
                 T8_direccionResidencia_Municipio.Enabled = false;
-                T8_direccionResidencia_Municipio.SelectedValue = "0";
+
+                // 2. Limpiamos la selección actual en memoria ANTES de borrar los ítems
+                T8_direccionResidencia_Departamento.ClearSelection();
+                T8_direccionResidencia_Municipio.ClearSelection();
+
+                T8_direccionResidencia_Departamento.Items.Clear();
+                T8_direccionResidencia_Municipio.Items.Clear();
+
+                // 3. Insertamos manualmente el ítem en la primera posición (índice 0)
+                T8_direccionResidencia_Departamento.Items.Insert(0, new ListItem("Seleccione departamento...", "0"));
+                T8_direccionResidencia_Municipio.Items.Insert(0, new ListItem("Seleccione municipio...", "0"));
+
+                // 4. ¡EL TRUCO! Seleccionamos por índice en lugar de valor. 
+                // Como acabamos de insertarlo en la posición 0, esto nunca fallará.
+                T8_direccionResidencia_Departamento.SelectedIndex = 0;
+                T8_direccionResidencia_Municipio.SelectedIndex = 0;
             }
         }
         protected void cibc_cs_T8_direccionResidencia_Departamento(object sender, EventArgs e)
         {
+            T8_direccionResidencia_Municipio.Items.Clear();
             try
             {
                 T8_direccionResidencia_Municipio.Enabled = true;
@@ -895,7 +948,7 @@ namespace STOD_Web
                 FIVEWS.CL_Diccionario Parametros = new FIVEWS.CL_Diccionario();
                 // Agregar Paramtetros al listado de parámetros
                 Parametros.Nombre = "@DepartamentoID";
-                Parametros.Valor = Convert.ToInt32(T8_direccionResidencia_Departamento.SelectedIndex);
+                Parametros.Valor = Convert.ToInt32(T8_direccionResidencia_Departamento.SelectedValue);
                 ListParamsIn.Add(Parametros);
                 // FIVEWS.CL_Diccionario listaParmas = ListParamsIn;
                 FIVEWS.CL_Resultado resultado = ws.FEICPJ_WS_CAT_11_Municipios(ListParamsIn.ToArray());
@@ -917,6 +970,7 @@ namespace STOD_Web
             catch (Exception ex)
             {
             }
+            T8_direccionResidencia_Municipio.Items.Insert(0, new ListItem("Seleccione municipio...", "0"));
         }
         protected void cibc_cs_T8_condicionMigratoria(object sender, EventArgs e)
         {
